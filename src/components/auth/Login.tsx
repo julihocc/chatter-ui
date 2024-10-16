@@ -10,7 +10,7 @@ export function Login() {
     <Auth
       submitLabel="Login"
       onSubmit={(request) => login(request)}
-      error={error ? "Credentials are not valid" : ""}
+      error={error}
     >
       <Link to="/signup" style={{ alignSelf: "center" }}>
         <MuiLink>Sign up</MuiLink>
