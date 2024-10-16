@@ -26,9 +26,9 @@ export function Signup() {
         } catch (error) {
           const errorMessage = extractErrorMessage(error);
           if (errorMessage) {
-            console.error(`Error signing up: ${errorMessage}`);
             setError(errorMessage);
           }
+          setError("An error occurred");
         }
       }}
     >
