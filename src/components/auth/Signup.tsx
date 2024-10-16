@@ -3,6 +3,7 @@ import { Link as MuiLink } from "@mui/material";
 import Auth from "./Auth";
 import useCreateUser from "../../hooks/useCreateUser";
 import { useState } from "react";
+import { extractErrorMessage } from "../../utils/errors";
 
 export function Signup() {
   const [createUser] = useCreateUser();
@@ -10,6 +11,7 @@ export function Signup() {
   return (
     <Auth
       submitLabel="Sign up"
+      error={error}
       onSubmit={async ({ email, password }) => {
         try {
           await createUser({
@@ -20,9 +22,13 @@ export function Signup() {
               },
             },
           });
+          setError("");
         } catch (error) {
-          console.error(error);
-          throw error;
+          const errorMessage = extractErrorMessage(error);
+          if (errorMessage) {
+            console.error(`Error signing up: ${errorMessage}`);
+            setError(errorMessage);
+          }
         }
       }}
     >
