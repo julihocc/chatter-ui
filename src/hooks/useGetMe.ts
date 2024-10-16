@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import User from "../models/User";
 
 const GET_ME = gql`
   query Me {
@@ -10,7 +11,7 @@ const GET_ME = gql`
 `;
 
 export const useGetMe = () => {
-  return useQuery(GET_ME);
+  return useQuery<{ me: User }>(GET_ME);
 };
 
 export default useGetMe;
