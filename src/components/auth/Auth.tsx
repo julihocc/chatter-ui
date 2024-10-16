@@ -5,9 +5,10 @@ type AuthProps = {
   submitLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
   children?: ReactNode;
+  error?: string;
 };
 
-export function Auth({ submitLabel, onSubmit, children }: AuthProps) {
+export function Auth({ submitLabel, onSubmit, children, error }: AuthProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -30,6 +31,8 @@ export function Auth({ submitLabel, onSubmit, children }: AuthProps) {
         variant="outlined"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
+        error={!!error}
+        helperText={error}
       />
       <TextField
         type="password"
@@ -37,6 +40,8 @@ export function Auth({ submitLabel, onSubmit, children }: AuthProps) {
         variant="outlined"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
+        error={!!error}
+        helperText={error}
       />
       <Button variant="contained" onClick={() => onSubmit({ email, password })}>
         {submitLabel}
