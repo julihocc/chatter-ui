@@ -1,4 +1,5 @@
 import useGetMe from "../../hooks/useGetMe";
+import { excludedRoutes } from "../../constants/excluded-routes";
 
 interface GuardProps {
   children: JSX.Element;
@@ -6,9 +7,9 @@ interface GuardProps {
 
 export function Guard({ children }: GuardProps) {
   const { data: user } = useGetMe();
-  console.log(`Current user: ${JSON.stringify(user)}`);
-
-  return <>{user ? children : <h1>Not logged in</h1>}</>;
+  const path = window.location.pathname;
+  const excluded = excludedRoutes.includes(path);
+  return <>{excluded ? children : user && children}</>;
 }
 
 export default Guard;

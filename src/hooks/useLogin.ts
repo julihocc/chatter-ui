@@ -8,13 +8,14 @@ interface LoginRequest {
 }
 
 export const useLogin = () => {
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>();
   const login = async (request: LoginRequest) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(request),
     });
     if (!res.ok) {
