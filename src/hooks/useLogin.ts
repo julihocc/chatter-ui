@@ -9,6 +9,7 @@ interface LoginRequest {
 
 export const useLogin = () => {
   const [error, setError] = useState<string>();
+
   const login = async (request: LoginRequest) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
@@ -18,6 +19,7 @@ export const useLogin = () => {
       credentials: "include",
       body: JSON.stringify(request),
     });
+
     if (!res.ok) {
       if (res.status === 401) {
         setError("Invalid email or password");
@@ -27,7 +29,12 @@ export const useLogin = () => {
       return;
     }
     setError("");
-    await client.refetchQueries({ include: "active" });
+    try {
+      await client.refetchQueries({ include: "all" });
+    } catch (e) {
+      console.error(`Error refetching queries: ${e}`);
+      throw new Error("An error occurred");
+    }
   };
 
   return { login, error };
