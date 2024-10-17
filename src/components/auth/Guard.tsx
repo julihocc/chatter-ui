@@ -9,7 +9,7 @@ export function Guard({ children }: GuardProps) {
   const { data: user } = useGetMe();
   const path = window.location.pathname;
   const excluded = excludedRoutes.includes(path);
-  return <>{excluded ? children : user && children}</>;
+  return <>{(excluded || user) && children}</>;
 }
 
 export default Guard;
